@@ -4,6 +4,7 @@
 
 #import <Cordova/CDV.h>
 #import "WebViewPlugin.h"
+#import "NSURLProtocolCustom.h"
 
 @implementation WebViewPlugin
 NSArray* results;
@@ -116,4 +117,21 @@ NSArray* results;
   [delegate webViewFinished];
   delegate = nil;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // View defaults to full size.  If you want to customize the view's size, or its subviews (e.g. webView),
+    // you can do so here.
+
+    [super viewWillAppear:animated];
+    [NSURLProtocol registerClass:[NSURLProtocolCustom class]];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [NSURLProtocol unregisterClass:[NSURLProtocolCustom class]];
+}
+
+
 @end
